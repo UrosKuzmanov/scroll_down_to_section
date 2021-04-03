@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+body{
+    margin: 0;
+    padding: 0;
+}
+nav{
+    padding: 10px;
+    background-color: pink;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
+li{
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+.section{
+    min-height: 100vh;
+    position: relative;  
+}
+#section1{background-color: powderblue;}
+#section2{background-color: rosybrown;}
+#section3{background-color: sandybrown;}
+#section4{background-color: sienna;}
+#section5{background-color :chocolate;}
+
+.content{
+    height: 200px;
+    width: 400px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(220, 220, 220);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>
+
+<body>
+    <nav>
+        <ul>
+            <li><a class="link" href="#section1">Section1</a></li>
+            <li><a class="link" href="#section2">Section2</a></li>
+            <li><a class="link" href="#section3">Section3</a></li>
+            <li><a class="link" href="#section4">Section4</a></li>
+            <li><a class="link" href="#section5">Section5</a></li>
+        </ul>
+    </nav>
+
+    <div class="section" id="section1">
+        <div class="content">
+            <h1>Secton 1</h1>
+        </div>
+    </div>
+    <div class="section" id="section2">
+        <div class="content">
+            <h1>Secton 2</h1>
+        </div>
+    </div>
+    <div class="section" id="section3">
+        <div class="content">
+            <h1>Secton 3</h1>
+        </div>
+    </div>
+    <div class="section" id="section4">
+        <div class="content">
+            <h1>Secton 4</h1>
+        </div>
+    </div>
+    <div class="section" id="section5">
+        <div class="content">
+            <h1>Secton 5</h1>
+        </div>
+    </div>
+
+
+<script>
+const nav_links=document.querySelectorAll(".link");
+let interval_id=null
+var current_off_set=0;
+
+function scroll_to(section_id){
+    const section=document.querySelector(section_id);
+    let section_off_set=section.offsetTop;
+    let direction=section_off_set>current_off_set
+    if(interval_id!=null){
+        clearInterval(interval_id)
+    }
+
+    interval_id=setInterval( ()=>{
+        window.scroll({
+            top: current_off_set,
+            left:0,
+            behavior:"auto"  
+        })
+        if(section_off_set>current_off_set){
+            current_off_set+=10
+        }else if(section_off_set<current_off_set){
+            current_off_set-=10
+        }
+        
+        if((current_off_set>=section_off_set && direction==true)||(current_off_set<=section_off_set && direction==false)){
+            clearInterval(interval_id)
+        }
+
+    }, 5)
+    
+    return false
+}
+//-------------------------------------//
+/*function get_section(e){
+    console.log(e.target.getAttribute("href"))
+}
+for(let nav_link of nav_links){
+    nav_link.onclick=get_section
+}*/
+//------------------------------------//
+
+for(let nav_link of nav_links){
+    nav_link.onclick=(e)=>scroll_to(e.target.getAttribute("href"))
+} 
+
+</script>
+      
+</body>
+</html>
